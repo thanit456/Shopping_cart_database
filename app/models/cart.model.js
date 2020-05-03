@@ -1,11 +1,9 @@
 const mongoose = require("mongoose");
 
-import ItemSchma from "./item.model";
-
 const CartSchema = mongoose.Schema(
   {
     owner_name: String,
-    items: [ItemSchma],
+    description: String,
   },
   {
     timestamps: true,

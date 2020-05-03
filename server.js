@@ -3,7 +3,7 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 const app = express();
 
-require("./app/routes/cart.routes");
+require("./app/routes/cart.routes")(app);
 
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -12,6 +12,8 @@ app.use(bodyParser.json());
 // Database configuration
 const dbConfig = require("./config/database.config");
 const mongoose = require("mongoose");
+
+mongoose.Promise = global.Promise;
 
 mongoose
   .connect(dbConfig.url, {
@@ -31,5 +33,5 @@ app.get("/", (req, res) => {
 });
 
 app.listen(3001, () => {
-  console.log("Server is listening on port 3000");
+  console.log("Server is listening on port 3001");
 });

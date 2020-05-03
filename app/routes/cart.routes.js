@@ -3,11 +3,11 @@ module.exports = (app) => {
 
   app.post("/cart", cart.create);
 
-  app.get("/cart/", cart.findAll);
+  app.get("/cart", cart.findAll);
 
-  app.get("/cart/:owner_name", cart.findOne);
+  app.get("/cart/:id", cart.findOne);
 
-  app.put("/cart/:owner_name", cart.update);
+  app.put("/cart/:id", cart.update);
 
-  app.delete("/cart/:owner_name", cart.delete);
+  app.delete("/cart/:id", cart.delete);
 };
