@@ -61,6 +61,60 @@ exports.findOne = (req, res) => {
     });
 };
 
-exports.update = (req, res) => {};
+exports.update = (req, res) => {
+  if (!req.body.owner_name) {
+    return res.status(400).send({
+      message: "Cart owner name cannot be empty",
+    });
+  }
 
-exports.delete = (req, res) => {};
+  Cart.findByIdAndUpdate(
+    req.params.owner_name,
+    {
+      owner_name: req.body.owner_name,
+      items: req.body.items,
+    },
+    { new: true }
+  )
+    .then((cart) => {
+      if (!cart) {
+        return res.status(404).send({
+          message: "Cart not found with owner name : " + req.params.owner_name,
+        });
+      }
+      res.send(cart);
+    })
+    .catch((error) => {
+      if (err.kind === "ObjectId") {
+        return res.status(404).send({
+          message: "Cart not found with owner name : " + req.params.owner_name,
+        });
+      }
+      return res.status(500).send({
+        message:
+          "Error updating cart with owner name : " + req.params.owner_name,
+      });
+    });
+};
+
+exports.delete = (req, res) => {
+  Cart.findByIdAndRemove(req.params.owner_name).then((cart) => {
+    if (!cart) {
+      return res.status(404).send({
+        message: "Cart not found with owner name : " + req.params.owner_name,
+      });
+    }
+    return res.send({ message: "Cart deleted successfully! " });
+  })
+  .catch((error) => {
+    if (err.kind === "ObjectId" || err.name === "NotFound") {
+      return res.status(404).send({
+        message: "Cart not found with owner name : " + req.params.owner_name,
+      });
+    }
+    return res.status(500).send({
+      message:
+        "Could not delete cart with owner name : " + req.params.owner_name,
+    });
+  }
+};
