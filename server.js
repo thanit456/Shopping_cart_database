@@ -7,6 +7,8 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const app = express();
 
+require("./app/routes/cart.routes");
+
 const MongoClient = require("mongodb").MongoClient;
 
 const connectionString = "";
