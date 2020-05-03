@@ -1,12 +1,12 @@
 const express = require("express");
 const bodyParser = require("body-parser");
-
+const cors = require("cors");
 const app = express();
 
 require("./app/routes/cart.routes");
 
+app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }));
-
 app.use(bodyParser.json());
 
 // Database configuration
@@ -30,6 +30,6 @@ app.get("/", (req, res) => {
   res.json({ message: "Hello World!" });
 });
 
-app.listen(3000, () => {
+app.listen(3001, () => {
   console.log("Server is listening on port 3000");
 });
