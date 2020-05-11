@@ -1,18 +1,22 @@
 const Cart = require("../models/cart.model");
-
+// const Item = require("../models/item.model");
 // www.callicoder.com/node-js-express-mongodb-restful-crud-api-tutorial/
 
 exports.create = (req, res) => {
-  if (!req.body.owner_name) {
+  console.log(req);
+  if (!req.body.description) {
     return res.status(400).send({
       message: "No the owner name in database",
     });
   }
 
   const cart = new Cart({
-    owner_name: req.body.owner_name,
+    owner_name: req.body.owner_name || "Untitled name",
     description: req.body.description,
   });
+
+  console.log(cart.owner_name);
+  console.log(cart.description);
 
   cart
     .save()
